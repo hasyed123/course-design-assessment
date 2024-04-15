@@ -23,12 +23,7 @@ class CourseServiceImpl(CourseService):
         return new_course_id
     
     def delete_course(self, course_id: int) -> bool:
-        try:
-            self.course_repository.delete_course(course_id)
-            return True
-        except BaseException as exception:
-            print('Unable to delete course: {}'.format(exception))
-            return False
+        return self.course_repository.delete_course(course_id)
     
     def create_assignment(self, course_id: int, assignment_name: str) -> int:
         course = self.course_repository.get_course(course_id)

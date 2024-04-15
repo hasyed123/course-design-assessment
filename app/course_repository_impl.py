@@ -21,8 +21,12 @@ class CourseRepositoryImpl(CourseRepository):
     def save_course(self, course: Course) -> None:
         self.database.save(self.mapper.to_course_document_from_course(course))
 
-    def delete_course(self, course_id: int) -> None:
-        self.database.delete(course_id)
+    def delete_course(self, course_id: int) -> bool:
+        try:
+            self.database.delete(course_id)
+            return True
+        except:
+            return False
 
 
 class CourseDocument:

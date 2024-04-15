@@ -23,5 +23,5 @@ class CourseRepository(ABC):
         pass
 
     @abstractmethod
-    def delete_course(self, course_id) -> None:
+    def delete_course(self, course_id) -> bool:
         pass

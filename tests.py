@@ -222,6 +222,16 @@ class TestCourseServiceImpl(unittest.TestCase):
         self.course_mock.get_top_five_students.return_value = [3, 4, 5, 6, 7]
 
         self.assertEqual([3, 4, 5, 6, 7], self.course_service.get_top_five_students(1))
+
+    def test_delete_course(self):
+        self.course_repository_mock.delete_course.return_value = True
+
+        self.assertEqual(True, self.course_service.delete_course(1))
+
+    def test_delete_course_when_course_does_not_exist(self):
+        self.course_repository_mock.delete_course.return_value = False
+
+        self.assertEqual(False, self.course_service.delete_course(1))
         
 if __name__ == '__main__':
     unittest.main()
