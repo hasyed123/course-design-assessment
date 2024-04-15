@@ -6,8 +6,6 @@ import math
 # Any function that modifies the state of the course will have validations on the inputs
 class Course:
     def __init__(self, id, name, students=None, assignments=None, submissions=None) -> None:
-        if id is None:
-            raise TypeError("Id must be present")
         if not name:
             raise ValueError("Name must be present")
         self.id = id
@@ -24,8 +22,6 @@ class Course:
         return new_assignment_id
     
     def enroll_student(self, student_id) -> bool:
-        if student_id is None:
-            raise TypeError("Id must be present")
         if student_id in self.students:
             return False
         self.students.add(student_id)
@@ -38,8 +34,6 @@ class Course:
         return True
     
     def submit_assignment(self, student_id, assignment_id, grade) -> bool:
-        if None in [student_id, assignment_id]:
-            raise TypeError("Student id and assignment id must be present")
         if (student_id, assignment_id) in self.submissions:
             return False
         if grade < 0 or grade > 100:
