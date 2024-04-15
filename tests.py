@@ -61,6 +61,28 @@ class TestCourse(unittest.TestCase):
         self.assertIn((student_id, assignment_id), self.course.submissions)
         self.assertTrue(succeed)
 
+    def test_submit_assignment_when_student_not_in_course(self):
+        student_id = 100
+        assignment_id = 1000
+        self.add_assignment(assignment_id, "assignment name")
+        grade = 95
+
+        succeed = self.course.submit_assignment(student_id, assignment_id, grade)
+
+        self.assertNotIn((student_id, assignment_id), self.course.submissions)
+        self.assertFalse(succeed)
+
+    def test_submit_assignment_when_assignment_not_in_course(self):
+        student_id = 100
+        assignment_id = 1000
+        self.add_student(student_id)
+        grade = 95
+
+        succeed = self.course.submit_assignment(student_id, assignment_id, grade)
+
+        self.assertNotIn((student_id, assignment_id), self.course.submissions)
+        self.assertFalse(succeed)
+
     def test_submit_assignment_with_grade_below_0(self):
         student_id = 100
         assignment_id = 1000

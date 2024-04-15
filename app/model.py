@@ -37,6 +37,8 @@ class Course:
         return True
     
     def submit_assignment(self, student_id, assignment_id, grade) -> bool:
+        if student_id not in self.students or assignment_id not in self.assignments:
+            return False
         if (student_id, assignment_id) in self.submissions:
             return False
         if grade < 0 or grade > 100:
