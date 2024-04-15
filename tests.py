@@ -1,5 +1,8 @@
 import unittest
-from model import Course
+from app.model import Course
+from unittest.mock import MagicMock
+from app.course_repository import CourseRepository
+from app.course_service_impl import CourseServiceImpl
 
 class TestCourse(unittest.TestCase):
     def setUp(self) -> None:
@@ -157,6 +160,68 @@ class TestCourse(unittest.TestCase):
 
     def add_assignment_submission(self, student_id, assignment_id, grade):
         self.course.submissions.update({(student_id, assignment_id): grade})
+
+class TestCourseServiceImpl(unittest.TestCase):
+    def setUp(self) -> None:
+        self.course_repository_mock = MagicMock(spec=CourseRepository)
+        self.course_service = CourseServiceImpl(self.course_repository_mock)
+        self.course_mock = MagicMock(spec=Course)
+        self.course_repository_mock.get_course.return_value = self.course_mock
+        self.course_repository_mock.get_all_courses.return_value = [self.course_mock]
+
+    def test_get_courses(self):
+        courses = self.course_service.get_courses()
+
+        self.assertEqual([self.course_mock], courses)
+
+    def test_get_course(self):
+        course = self.course_service.get_course_by_id(1)
+
+        self.assertEqual(self.course_mock, course)
+
+    def test_create_course(self):
+        new_course_id = self.course_service.create_course("New Course")
+
+        self.assertIsNotNone(new_course_id)
+        self.course_repository_mock.save_course.assert_called_once()
+
+    def test_create_assignment(self):
+        self.course_mock.create_assignment.return_value = 1
+
+        new_assignment_id = self.course_service.create_assignment(1, "New assignment")
+
+        self.assertEqual(1, new_assignment_id)
+        self.course_repository_mock.save_course.assert_called_once()
+
+    def test_enroll_student(self):
+        self.course_service.enroll_student(1, 100)
+
+        self.course_repository_mock.save_course.assert_called_once()
+
+    def test_dropout_student(self):
+        self.course_service.dropout_student(1, 100)
+
+        self.course_repository_mock.save_course.assert_called_once()
+
+    def test_submit_assignment(self):
+        self.course_service.submit_assignment(1, 100, 1000, 80)
+
+        self.course_repository_mock.save_course.assert_called_once()
+
+    def test_get_assignment_grade_avg(self):
+        self.course_mock.get_assignment_grade_average.return_value = 90
+
+        self.assertEqual(90, self.course_service.get_assignment_grade_avg(1, 1000))
+
+    def test_get_student_grade_avg(self):
+        self.course_mock.get_student_grade_average.return_value = 90
+
+        self.assertEqual(90, self.course_service.get_student_grade_avg(1, 1000))
+
+    def test_get_top_five_students(self):
+        self.course_mock.get_top_five_students.return_value = [3, 4, 5, 6, 7]
+
+        self.assertEqual([3, 4, 5, 6, 7], self.course_service.get_top_five_students(1))
         
 if __name__ == '__main__':
     unittest.main()
