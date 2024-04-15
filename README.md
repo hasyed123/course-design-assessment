@@ -1,3 +1,10 @@
+# High level overview of the components
+- Model: Provides a data structure for the state of a course within the app and the ability to modify that state (enrolling students, accepting submissions etc) and derive information from that state (calculating averages of students, assignments etc). All the business logic around these operations is contained here as well, providing reusability and data integrity
+
+- Repository: Provides a layer of abstraction between data access and the rest of the app. Responsible for loading data from the database into a Course model, and saving the state of a Course model back to the database after any changes
+
+- Service: Controls the flow of the application. Interacts with the client, manages calls to the repository, and invokes model operations
+
 # Course Management System
 You are asked to design a course management system. This system will help the faculty manage many courses, along with the enrolled students in each of the courses, and track their assignments.
 
@@ -34,10 +41,3 @@ Please clone this repo and finish your implementation based on the requirements.
 You can submit your assessment by either way:
 - Create a public GitHub repository and send us the URL for it
 - Zip your solution and email it back to us
-
-# High level overview of the components
-- Model: Provides a data structure for the state of a course within the app and the ability to modify that state (enrolling students, accepting submissions etc) and derive information from that state (calculating averages of students, assignments etc). All the business logic around these operations is contained here as well, providing reusability and data integrity
-
-- Repository: Provides a layer of abstraction between data access and the rest of the app. Responsible for loading data from the database into a Course model, and saving the state of a Course model back to the database after any changes
-
-- Service: Controls the flow of the application. Interacts with the client, manages calls to the repository, and invokes model operations
