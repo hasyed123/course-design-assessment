@@ -4,7 +4,7 @@ import math
 
 '''
 This class is a data structure that stores course information
-and encapulates the business logic around modifying that data and performing calculations on it.
+and encapsulates the business logic around modifying that data and performing calculations on it.
 Keeping this logic here ensures the integrity of the data
 '''
 class Course:
