@@ -9,21 +9,24 @@ if __name__ == "__main__":
     course_id = course_service.create_course(course_name)
     print(f"Created course: {course_name} with ID: {course_id}")
 
+    number_of_students = 6
+    number_of_assignments = 4
+
     # Enroll students
-    for student_id in range(1, 6):
+    for student_id in range(number_of_students):
         enroll_succeeded = course_service.enroll_student(course_id, student_id)
         print(f"Enrolled student {student_id}: {enroll_succeeded}")
 
     # Create assignments
     assignment_ids = {}
-    for assignment_id in range(1, 4):
+    for assignment_id in range(number_of_assignments):
         assignment_name = f"Assignment {assignment_id}"
         new_assignment_id = course_service.create_assignment(course_id, assignment_name)
         assignment_ids.update({new_assignment_id: assignment_name})
         print(f"Created assignment: {assignment_name} with ID: {new_assignment_id}")
 
     # Submit assignments with random grades between 0 and 100
-    for student_id in range(1, 6):
+    for student_id in range(number_of_students):
         for assignment_id in assignment_ids:
             grade = random.randint(0, 100)
             submit_succeeded = course_service.submit_assignment(course_id, student_id, assignment_id, grade)
@@ -35,7 +38,7 @@ if __name__ == "__main__":
         print(f"Average grade for assignment {assignment_ids.get(assignment_id)}: {avg_grade}")
 
     # Display average grade of each student
-    for student_id in range(1, 6):
+    for student_id in range(number_of_students):
         avg_grade = course_service.get_student_grade_avg(course_id, student_id)
         print(f"Average grade for student {student_id}: {avg_grade}")
 
