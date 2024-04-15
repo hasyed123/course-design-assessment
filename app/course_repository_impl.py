@@ -12,8 +12,8 @@ class CourseRepositoryImpl(CourseRepository):
         super().__init__()
 
     def get_all_courses(self) -> List[Course]:
-        all_course_entities = self.database.get_all()
-        return list(map(lambda course_document: self.mapper.to_course_from_course_document(course_document), all_course_entities))
+        all_course_documents = self.database.get_all()
+        return list(map(lambda course_document: self.mapper.to_course_from_course_document(course_document), all_course_documents))
 
     def get_course(self, course_id: int) -> Course:
         return self.mapper.to_course_from_course_document(self.database.get(course_id))
