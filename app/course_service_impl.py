@@ -4,6 +4,7 @@ from typing import List
 from app.course_repository import CourseRepository
 from uuid import uuid4
 
+# Orechestration layer that controls the workflow
 class CourseServiceImpl(CourseService):
     
     def __init__(self, course_repository: CourseRepository) -> None:

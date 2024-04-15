@@ -3,7 +3,7 @@ from app.model import Course
 from typing import List, Tuple, Dict, Set
 from copy import deepcopy
 
-# CourseRepository that is coupled to the in-memory DB. A new implementation would be required if the database implementation changes
+# CourseRepository implementation that is coupled to the in-memory DB. A new implementation would be required if the database implementation changes
 class CourseRepositoryImpl(CourseRepository):
 
     def __init__(self) -> None:
@@ -28,7 +28,7 @@ class CourseRepositoryImpl(CourseRepository):
         except:
             return False
 
-
+# This class is used only for storage purposes in the DB
 class CourseDocument:
     def __init__(self, id, name, students=None, assignments=None, submissions=None) -> None:
         self.id = id
@@ -54,7 +54,7 @@ class Database():
     def get_all(self) -> List[CourseDocument]:
         return deepcopy(list(self.courses.values()))
 
-# Mapper that converts the in-memory DB data structures to the models used by the application  
+# Mapper that converts the in-memory DB documents to the models used by the application  
 class Mapper():
     def __init__(self) -> None:
         pass

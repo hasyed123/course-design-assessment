@@ -2,8 +2,11 @@ from uuid import uuid4
 from typing import List
 import math
 
-# Used for holding state in the app and encapsulating the logic that changes that state
-# Any function that modifies the state of the course will have validations on the inputs
+'''
+This class is a data structure that stores course information
+and encapulates the business logic around modifying that data and performing calculations on it.
+Keeping this logic here ensures the integrity of the data
+'''
 class Course:
     def __init__(self, id, name, students=None, assignments=None, submissions=None) -> None:
         if not name:
